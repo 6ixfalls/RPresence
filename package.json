@@ -1,0 +1,33 @@
+{
+  "name": "rpresence",
+  "version": "2.3.0",
+  "description": "Roblox to Discord Rich Presence",
+  "main": "index.js",
+  "scripts": {
+    "native-rebuild": "call .\\node_modules\\.bin\\electron-rebuild.cmd",
+    "build-windows": "call ./build_windows.bat"
+  },
+  "keywords": [
+    "roblox",
+    "discord",
+    "rich_presence",
+    "discord.js",
+    "richpresence",
+    "rblx"
+  ],
+  "author": "theLMGN",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "active-window": "^0.1.0",
+    "discord-rpc": "^3.1.0",
+    "electron-log": "^4.4.1",
+    "electron-rebuild": "^2.3.5",
+    "find-process": "^1.4.4",
+    "node-fetch": "^2.6.0",
+    "ps-node": "^0.1.6",
+    "wql-process-monitor": "github:xan105/node-processMonitor"
+  },
+  "devDependencies": {
+    "electron": "^13.1.7"
+  }
+}
