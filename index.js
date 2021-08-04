@@ -8,7 +8,7 @@ const log = require("electron-log");
 const clientId = "626092891667824688";
 
 log.info("Loading RPresence!");
-const configFile = require("path").join(os.homedir(), "rblxrp_config.json");
+const configFile = require("path").join(os.homedir(), "rpresence_config.json");
 let configCorrupt = false;
 let configJSON = global.configJSON = {
     defaultIconKey: "logo_shiny", // logo_old, logo_red, logo_shiny
@@ -43,23 +43,8 @@ async function menu(item) {
             global.setIcons[i].iconkey = configJSON.defaultIconKey;
         }
     }
-    global.lastPresense = false; // force presense update
-    saveConfig();
-}
 
-function getVersion() {
-    if (fs.existsSync("./package.json")) {
-        try {
-            let file = JSON.parse(fs.readFileSync("./package.json").toString());
-            if (file.version) {
-                return file.version + " ";
-            } else {
-                return "";
-            }
-        } catch (e) { return ""; }
-    } else {
-        return "";
-    }
+    saveConfig();
 }
 
 global.rpc.on("ready", async () => {
@@ -80,12 +65,6 @@ global.rpc.on("ready", async () => {
                 saveConfig();
             }
         },
-        /* { label: "Studio Enabled", type: "checkbox", checked: configJSON.studioEnabled, click: function() {
-            log.info("Toggling studioEnabled");
-            configJSON.studioEnabled = !configJSON.studioEnabled;
-            contextMenu.items[0].checked = configJSON.studioEnabled;
-            saveConfig();
-        } },*/
         {
             label: "Default game icon",
             type: "submenu",
@@ -97,14 +76,6 @@ global.rpc.on("ready", async () => {
         },
         { type: "separator" },
         { label: "Quit", click: exit }
-        // { label: "rblxRP " + getVersion() + "by theLMGN", enabled: false },
-        /* {
-            label: "GitHub", click: function () {
-                shell.openExternal("https://github.com/thelmgn/rblxrp");
-            }
-        },
-        { type: "separator" }, */
-        // { label: "Quit", click: exit }
     ]);
     tray.setContextMenu(contextMenu);
     tray.setToolTip("RPresence");

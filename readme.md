@@ -1,44 +1,39 @@
-# rblxRP 2.0
+# RPresence V1.0
 
-Adds Discord rich presence for Roblox.
+RPresence is a fork of [rblxRP by theLMGN](https://github.com/theLMGN/rblxRP).
 
-[Join my Discord server](https://discord.gg/4qzqg3k)
+This fork adds presence updating instantly through process events, and a few QOL changes.
 
-![preview](https://i.imgur.com/T3hEpBi.png) ![menubar](http://lmgn.uk/gId.png)
+![preview](https://i.imgur.com/T3hEpBi.png)
 
 ## Instructions
 
 ### Windows
 
-1. Go to the [releases page](https://github.com/theLMGN/rblxRP/releases)
-2. Download the `rblxrp-win32.zip` file and unzip it
-3. Open `rblxrp.exe`
+1. Go to the [releases page](https://github.com/6ixfalls/RPresence/releases)
+2. Download the `rpresence-win32-x64.zip` file and unzip it
+3. Open `rpresence.exe`
 
 ### macOS
 
-1. Go to the [releases page](https://github.com/theLMGN/rblxRP/releases)
-2. Download the `rblxrp.dmg` and open it.
-3. Drag the `rblxRP.app` to `Applications`
-4. Use Spotlight or Launchpad to open `rblxRP.app`
+MacOS support for this fork is not being worked on due to missing API features.
 
 ## Troubleshooting
 
 **Failed to connect**
 
-Restart Discord
+Restart Discord.
 
 ## Development Instructions
 
-First of all, clone the repo, install nodejs, and type `npm i`
+Clone the repository, and run `npm i` (With NodeJS installed)
 
-### macOS
+### Windows
 
 #### Running
 
-`./node_modules/electron/dist/Electron.app/Contents/MacOS/Electron .`
+`electron index.js`
 
 #### Building
 
-`bash build-macos.sh`
-
-A fork of theLMGN/rblxRP, with event based presence changing.
+`npm run build-windows`
