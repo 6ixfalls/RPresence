@@ -196,7 +196,7 @@ async function BeginListener() {
                     rpc.setActivity({
                         details: game.name,
                         state: `by ${game.by}`,
-                        startTimestamp: 0,
+                        startTimestamp: + new Date(),
                         largeImageKey: game.iconkey,
                         buttons: [
                             {
