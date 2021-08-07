@@ -19,9 +19,11 @@
   "license": "GPL-3.0",
   "dependencies": {
     "active-window": "^0.1.0",
+    "body-parser": "^1.19.0",
     "discord-rpc": "^3.1.0",
     "electron-log": "^4.4.1",
     "electron-rebuild": "^2.3.5",
+    "express": "^4.17.1",
     "find-process": "^1.4.4",
     "node-fetch": "^2.6.0",
     "ps-node": "^0.1.6",

@@ -6,8 +6,10 @@ const WQL = require("wql-process-monitor");
 const ps = require("ps-node");
 const log = require("electron-log");
 const childprocess = require("child_process");
-const { app, Notification, Menu, Tray, shell } = require("electron");
+const { app, Notification, Menu, Tray, shell, powerSaveBlocker } = require("electron");
 const path = require("path");
+const express = require("express");
+const { json } = require("body-parser");
 
 let CachedProcess;
 
@@ -238,6 +240,50 @@ async function BeginListener() {
     });
 
     global.childprocess = process;
+
+    // Roblox Studio Plugin Support
+    let app = express();
+
+    app.use(json());
+
+    app.post('/update', async (req, res) => {
+        var data = req.body;
+        var gameName = data.name;
+        var gameId = data.gameId;
+        var game;
+
+        if (gameId) {
+            game = await getGameFromCache(gameId);
+        }
+
+        if (game) {
+            rpc.setActivity({
+                details: game.name,
+                state: `by ${game.by}`,
+                startTimestamp: + new Date(),
+                largeImageKey: game.iconkey,
+                instance: false
+            });
+        } else {
+            rpc.setActivity({
+                details: gameName,
+                state: `Unpublished Game`,
+                startTimestamp: + new Date(),
+                largeImageKey: global.configJSON.defaultIconKey,
+                instance: false
+            });
+        }
+
+        res.sendStatus(200);
+    });
+
+    app.get('/clear', (req, res) => {
+        rpc.clearActivity();
+
+        res.sendStatus(200);
+    });
+
+    app.listen(2043);
 }
 
 module.exports = BeginListener;
