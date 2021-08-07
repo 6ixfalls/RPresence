@@ -18,6 +18,11 @@ This fork adds presence updating instantly through process events, and a few QOL
 
 MacOS support for this fork is not being worked on due to missing API features.
 
+### Roblox Studio Support
+
+Roblox Studio is supported through the use of a plugin found [here](https://www.roblox.com/library/7219012005/RPresence-Companion).
+Source code of this plugin is in `RPresence.lua`.
+
 ## Troubleshooting
 
 **Failed to connect**
