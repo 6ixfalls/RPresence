@@ -104,7 +104,7 @@ async function go() {
 
         log.info("Downloading configuration...");
         tray.setTitle("Downloading config...");
-        let req = await fetch("https://gist.githubusercontent.com/theLMGN/3799b5cb7b0328be7a13860e46832b0e/raw/9f73d30f4e6369ef976234eb99ed8207363d24ea/rblxrp_config.json");
+        let req = await fetch("https://raw.githubusercontent.com/6ixfalls/RPresence/main/gamesconfig.json");
         if (!req.ok) { throw new Error("not ok!"); }
         let j = await req.json();
         global.setIcons = j.games;
