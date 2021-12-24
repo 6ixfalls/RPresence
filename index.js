@@ -35,18 +35,6 @@ async function exit() {
     process.kill(process.pid);
 }
 
-async function menu(item) {
-    item.checked = true;
-    configJSON.defaultIconKey = item.id;
-    for (let i in global.setIcons) {
-        if (global.setIcons[i].iconkey == "logo_shiny" || global.setIcons[i].iconkey == "logo_red" || global.setIcons[i].iconkey == "logo_old") {
-            global.setIcons[i].iconkey = configJSON.defaultIconKey;
-        }
-    }
-
-    saveConfig();
-}
-
 global.rpc.on("ready", async () => {
     BeginListener();
 
@@ -64,15 +52,6 @@ global.rpc.on("ready", async () => {
                 contextMenu.items[0].checked = configJSON.enabled;
                 saveConfig();
             }
-        },
-        {
-            label: "Default game icon",
-            type: "submenu",
-            submenu: [
-                { label: "Shiny", id: "logo_shiny", type: "radio", checked: configJSON.defaultIconKey == "logo_shiny", click: menu },
-                { label: "Red", id: "logo_red", checked: configJSON.defaultIconKey == "logo_red", type: "radio", click: menu },
-                { label: "Old 'R' Logo", id: "logo_old", checked: configJSON.defaultIconKey == "logo_old", type: "radio", click: menu }
-            ]
         },
         { type: "separator" },
         { label: "Quit", click: exit }
@@ -101,14 +80,6 @@ async function go() {
         ]);
         tray.setToolTip("RPresence");
         tray.setContextMenu(contextMenu);
-
-        log.info("Downloading configuration...");
-        tray.setTitle("Downloading config...");
-        let req = await fetch("https://raw.githubusercontent.com/6ixfalls/RPresence/main/gamesconfig.json");
-        if (!req.ok) { throw new Error("not ok!"); }
-        let j = await req.json();
-        global.setIcons = j.games;
-        log.info("Downloaded configuration!");
 
         log.info("Connecting to Discord...");
         tray.setTitle("Connecting to Discord...");

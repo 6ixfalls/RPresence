@@ -12,9 +12,10 @@ const express = require("express");
 const { json } = require("body-parser");
 
 let CachedProcess;
+let CachedIcons = {};
 
 async function getGameFromCache(gameid) {
-    if (global.setIcons[gameid]) return global.setIcons[gameid];
+    if (CachedIcons[gameid]) return CachedIcons[gameid];
 
     try {
         let apiResponse = await fetch("https://api.roblox.com/marketplace/productinfo?assetId=" + gameid);
@@ -27,7 +28,11 @@ async function getGameFromCache(gameid) {
             id: gameid
         };
 
-        global.setIcons[gameid] = obj;
+        if (j.IconImageAssetId && j.IconImageAssetId != 0) {
+            obj.iconkey = "https://assetdelivery.roblox.com/v1/asset?id=" + j.IconImageAssetId;
+        }
+
+        CachedIcons[gameid] = obj;
         return obj;
     } catch (e) {
         log.error(e);
