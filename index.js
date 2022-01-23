@@ -13,7 +13,8 @@ let configCorrupt = false;
 let configJSON = global.configJSON = {
     defaultIconKey: "logo_shiny", // logo_old, logo_red, logo_shiny
     enabled: true,
-    studioEnabled: true
+    studioEnabled: true,
+    bypassPrivacy: false,
 };
 if (fs.existsSync(configFile)) {
     try {
@@ -50,6 +51,14 @@ global.rpc.on("ready", async () => {
                 log.info("Toggling enabled");
                 configJSON.enabled = !configJSON.enabled;
                 contextMenu.items[0].checked = configJSON.enabled;
+                saveConfig();
+            },
+        },
+        {
+            label: "Bypass Privacy Settings", type: "checkbox", checked: configJSON.bypassPrivacy, click: function () {
+                log.info("Toggling privacy bypass");
+                configJSON.bypassPrivacy = !configJSON.bypassPrivacy;
+                contextMenu.items[1].checked = configJSON.bypassPrivacy;
                 saveConfig();
             }
         },

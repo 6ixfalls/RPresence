@@ -12,6 +12,7 @@ const express = require("express");
 const { json } = require("body-parser");
 
 let CachedProcess;
+let joinButtonRetry;
 let CachedIcons = {};
 
 async function getGameFromCache(gameid) {
@@ -200,20 +201,58 @@ async function BeginListener() {
 
                     log.info("Playing", game.name, "by", game.by);
                     global.tray.setTitle(game.name, "by", game.by);
+
+                    var redeem = await fetch('https://auth.roblox.com/v1/authentication-ticket/redeem', { method: 'POST', headers: { "RBXAuthenticationNegotiation": "https://github.com/6ixfalls/RPresence", "Content-Type": "application/json" }, body: JSON.stringify({ authenticationTicket: util.getTicket(proc.arguments) }) });
+                    var ROBLOSECURITY = util.getSecurityCookie(redeem.headers.raw()['set-cookie']);
+                    var userId = await fetch(`https://users.roblox.com/v1/users/authenticated`, { headers: { Cookie: ROBLOSECURITY } });
+                    var userData = await userId.json();
+
+                    var startTimestamp = + new Date();
+
+                    joinButtonRetry = setInterval(async () => {
+                        var gameInfoHeaders = { 'Content-Type': "application/json" };
+
+                        if (global.configJSON.bypassPrivacy) {
+                            gameInfoHeaders['Cookie'] = ROBLOSECURITY;
+                        }
+
+                        var gameInfo = await fetch(`https://presence.roblox.com/v1/presence/users`, {
+                            method: 'POST',
+                            headers: gameInfoHeaders,
+                            body: `{"userIds":[${userData.id}]}`
+                        });
+                        var gameInfoResponse = await gameInfo.json();
+
+                        if (gameInfoResponse.userPresences) {
+                            var gameInfoData = gameInfoResponse.userPresences[0];
+
+                            if (gameInfoData.gameId && gameInfoData.lastLocation) {
+                                rpc.setActivity({
+                                    details: game.name,
+                                    state: `by ${game.by}`,
+                                    startTimestamp: startTimestamp,
+                                    largeImageKey: game.iconkey,
+                                    buttons: [{
+                                        label: "Join Game",
+                                        url: `https://xiva.xyz/RPresence/?placeID=${game.id}&gameInstanceID=${gameInfoData.gameId}&gameName=${encodeURIComponent(game.name)}`
+                                    }],
+                                    instance: false
+                                });
+
+                                log.info("Found join url: " + `https://xiva.xyz/RPresence/?placeID=${game.id}&gameInstanceID=${gameInfoData.gameId}&gameName=${encodeURIComponent(game.name)}`);
+
+                                clearInterval(joinButtonRetry);
+                            }
+                        }
+                    }, 10000);
+
                     rpc.setActivity({
                         details: game.name,
                         state: `by ${game.by}`,
-                        startTimestamp: + new Date(),
+                        startTimestamp: startTimestamp,
                         largeImageKey: game.iconkey,
-                        buttons: [
-                            {
-                                label: "Join Game",
-                                url: "https://www.roblox.com/games/" + (game.id || game.iconkey)
-                            }
-                        ],
                         instance: false
                     });
-
                     CachedProcess = pid;
                 } else {
                     log.info("Started process was not Roblox");
@@ -224,6 +263,7 @@ async function BeginListener() {
         } else if (data.type == "deletion") {
             if (CachedProcess == pid) {
                 CachedProcess = undefined;
+                clearInterval(joinButtonRetry);
                 rpc.clearActivity();
                 global.tray.setTitle("");
                 log.info("[Detect:Proc] Process with PID " + pid + " has been closed");
