@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPresence</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+<body>
+    <style>
+        .loading {
+            position: relative;
+            background-color: #383838;
+            clip-path: inset(0px);
+            height: 31vh;
+        }
+
+        /* The moving element */
+        .loading::after {
+            display: block;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: translateX(-100%);
+            top: 0;
+                        
+            background: linear-gradient(90deg, transparent,
+                    rgba(255, 255, 255, 0.2), transparent);
+    
+            /* Adding animation */
+            animation: loading 0.8s infinite;
+        }
+    
+        /* Loading Animation */
+        @keyframes loading {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        nav a {
+            user-select: none;
+        }
+    </style>
+
+    <header>
+        <h3>RPresence Game Launcher</h3>
+    </header>
+
+    <main style="text-align: center; align-content: center;">
+        <div id="pic" class="loading">
+            <image id="gameThumbnail"></image>
+        </div>
+        <h4 id="gameName"></h4>
+        <p><a href="https://chrome.google.com/webstore/detail/rogold/mafcicncghogpdpaieifglifaagndbni">RoGold</a> is required to launch this game!</p>
+        <p style="font-size: 0.9rem;">RoGold installed? Click the button below:</p>
+        <nav><a style="transition: all 0.2s; cursor: pointer; margin: 0;" id="joinGame">Join Game</a></nav>
+        <a href="https://chrome.google.com/webstore/detail/rogold/mafcicncghogpdpaieifglifaagndbni" style="opacity: 0.7; font-size: 0.9rem;" id="gamePage">Roblox Game Page</a>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+</html>
