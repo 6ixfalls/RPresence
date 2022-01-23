@@ -36,7 +36,7 @@ async function getGameFromCache(gameid) {
         CachedIcons[gameid] = obj;
         return obj;
     } catch (e) {
-        log.error(e);
+        log.error(e.message);
         return {
             name: "Unknown Game",
             by: "Unknown",
@@ -227,19 +227,21 @@ async function BeginListener() {
                             var gameInfoData = gameInfoResponse.userPresences[0];
 
                             if (gameInfoData.gameId && gameInfoData.lastLocation) {
+                                game = await getGameFromCache(gameInfoData.placeId);
+
                                 rpc.setActivity({
-                                    details: game.name,
+                                    details: gameInfoData.lastLocation,
                                     state: `by ${game.by}`,
                                     startTimestamp: startTimestamp,
                                     largeImageKey: game.iconkey,
                                     buttons: [{
                                         label: "Join Game",
-                                        url: `https://xiva.xyz/RPresence/?placeID=${game.id}&gameInstanceID=${gameInfoData.gameId}&gameName=${encodeURIComponent(game.name)}`
+                                        url: `https://xiva.xyz/RPresence/?placeID=${gameInfoData.rootPlaceId}&gameInstanceID=${gameInfoData.gameId}&gameName=${encodeURIComponent(gameInfoData.lastLocation)}`
                                     }],
                                     instance: false
                                 });
 
-                                log.info("Found join url: " + `https://xiva.xyz/RPresence/?placeID=${game.id}&gameInstanceID=${gameInfoData.gameId}&gameName=${encodeURIComponent(game.name)}`);
+                                log.info("Generated InstantJoin URL: " + `https://xiva.xyz/RPresence/?placeID=${gameInfoData.rootPlaceId}&gameInstanceID=${gameInfoData.gameId}&gameName=${encodeURIComponent(gameInfoData.lastLocation)}`);
 
                                 clearInterval(joinButtonRetry);
                             }
