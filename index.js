@@ -41,7 +41,7 @@ if (!placeID || !gameInstanceId || !gameName) {
     document.getElementById("gamePage").href = `https://roblox.com/games/${placeID}`;
 
     document.getElementById("joinGame").addEventListener("click", (e) => {
-        window.location.href = `https://roblox.com/discover#/rg-join/${placeID}/${gameInstanceId}`;
+        window.open(`https://roblox.com/discover#/rg-join/${placeID}/${gameInstanceId}`).focus();
     });
 
     if (isMobile()) {
@@ -49,7 +49,7 @@ if (!placeID || !gameInstanceId || !gameName) {
     } else {
         var isRoGoldInstalled = await checkForRoGold();
         if (isRoGoldInstalled && placeID && gameInstanceId) {
-            window.location.href = `https://roblox.com/discover#/rg-join/${placeID}/${gameInstanceId}`;
+            window.open(`https://roblox.com/discover#/rg-join/${placeID}/${gameInstanceId}`).focus();
         }
     }
 })();
