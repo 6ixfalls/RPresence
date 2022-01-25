@@ -1,10 +1,10 @@
-# RPresence V1.0
+# RPresence
 
-RPresence is a fork of [rblxRP by theLMGN](https://github.com/theLMGN/rblxRP).
+RPresence is a heavily modified fork of [rblxRP by theLMGN](https://github.com/theLMGN/rblxRP).
 
-This fork adds presence updating instantly through process events, and a few QOL changes.
+This fork adds presence updating instantly through process events, instant game join links with RoGold, and a few QOL changes.
 
-![preview](https://i.imgur.com/T3hEpBi.png)
+![](https://user-images.githubusercontent.com/23470032/150919773-e28fdbc2-5b05-4810-a030-1d05e6802b85.png)
 
 ## Instructions
 
@@ -16,11 +16,11 @@ This fork adds presence updating instantly through process events, and a few QOL
 
 ### macOS
 
-MacOS support for this fork is not being worked on due to missing API features.
+MacOS Support is not currently implemented, and likely will not be.
 
 ### Roblox Studio Support
 
-Roblox Studio is supported through the use of a plugin found [here](https://www.roblox.com/library/7219012005/RPresence-Companion).
+Roblox Studio is supported (not well!) through the use of a plugin found [here](https://www.roblox.com/library/7219012005/RPresence-Companion).
 Source code of this plugin is in `RPresence.lua`.
 
 ## Troubleshooting
