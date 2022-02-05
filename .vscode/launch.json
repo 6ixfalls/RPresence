@@ -5,10 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "electron",
+            "type": "node",
             "request": "launch",
-            "name": "Launch Electron against the workspace",
-            "appDir": "${workspaceFolder}"
+            "name": "Launch Electron against the workspace via NPM",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "test"
+            ]
         }
     ]
 }

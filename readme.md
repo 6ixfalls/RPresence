@@ -37,8 +37,16 @@ Clone the repository, and run `npm i` (With NodeJS installed)
 
 #### Running
 
-`electron index.js`
+`npm run test`
 
 #### Building
 
-`npm run build-windows`
+`npm run package-win`
+
+## Footer Notes
+
+Only this specific commit works with this; not sure why.
+
+`github:xan105/node-processMonitor#ed58a15212366626e5e49daa3bf51fccc900f324`
+
+If you find anything, please create an issue!
