@@ -2,11 +2,11 @@
   "name": "rpresence",
   "version": "2.3.0",
   "description": "Roblox to Discord Rich Presence",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "npm run build && npm run start",
     "start": "electron build/index.js",
-    "copystatic": "copyfiles -u 1 ico/**/*.* target/ico/",
+    "copystatic": "copyfiles -u 1 ico/**/*.* build/ico/",
     "build": "tsc && npm run copystatic",
     "package-win": "npm run build && call electron-packager . rpresence --platform win32 --out ./dist --overwrite --icon ./ico/logo.ico",
     "native-rebuild": "call .\\node_modules\\.bin\\electron-rebuild.cmd"
@@ -26,7 +26,6 @@
     "body-parser": "^1.19.0",
     "discord-rpc": "^3.1.0",
     "electron-log": "^4.4.1",
-    "electron-rebuild": "^2.3.5",
     "express": "^4.17.1",
     "find-process": "^1.4.4",
     "object-fill-missing-keys": "^8.1.0",
@@ -36,6 +35,7 @@
   "devDependencies": {
     "@types/discord-rpc": "^4.0.0",
     "@types/express": "^4.17.13",
+    "asar": "^3.1.0",
     "copyfiles": "^2.4.1",
     "electron": "^13.1.7"
   }
