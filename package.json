@@ -4,8 +4,12 @@
   "description": "Roblox to Discord Rich Presence",
   "main": "index.js",
   "scripts": {
-    "native-rebuild": "call .\\node_modules\\.bin\\electron-rebuild.cmd",
-    "build-windows": "call ./build_windows.bat"
+    "test": "npm run build && npm run start",
+    "start": "electron build/index.js",
+    "copystatic": "copyfiles -u 1 ico/**/*.* target/ico/",
+    "build": "tsc && npm run copystatic",
+    "package-win": "npm run build && call electron-packager . rpresence --platform win32 --out ./dist --overwrite --icon ./ico/logo.ico",
+    "native-rebuild": "call .\\node_modules\\.bin\\electron-rebuild.cmd"
   },
   "keywords": [
     "roblox",
@@ -18,18 +22,21 @@
   "author": "6ixfalls",
   "license": "GPL-3.0",
   "dependencies": {
-    "active-window": "^0.1.0",
+    "axios": "^0.25.0",
     "body-parser": "^1.19.0",
     "discord-rpc": "^3.1.0",
     "electron-log": "^4.4.1",
     "electron-rebuild": "^2.3.5",
     "express": "^4.17.1",
     "find-process": "^1.4.4",
-    "node-fetch": "^2.6.0",
-    "ps-node": "^0.1.6",
-    "wql-process-monitor": "github:xan105/node-processMonitor"
+    "object-fill-missing-keys": "^8.1.0",
+    "source-map-support": "^0.5.21",
+    "wql-process-monitor": "github:xan105/node-processMonitor#ed58a15212366626e5e49daa3bf51fccc900f324"
   },
   "devDependencies": {
+    "@types/discord-rpc": "^4.0.0",
+    "@types/express": "^4.17.13",
+    "copyfiles": "^2.4.1",
     "electron": "^13.1.7"
   }
 }
