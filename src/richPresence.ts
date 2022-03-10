@@ -172,7 +172,7 @@ export async function BeginListener() {
                                         global.configJSON.joinLinkMode ==
                                         "rogold"
                                     ) {
-                                        joinURL = `https://xiva.xyz/RPresence/?placeID=${
+                                        joinURL = `https://sixfalls.me/RPresence/?placeID=${
                                             gameInfoData.rootPlaceId
                                         }&gameInstanceID=${
                                             gameInfoData.gameId
