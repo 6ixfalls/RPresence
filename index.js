@@ -36,7 +36,19 @@ if (!placeID || !gameInstanceId || !gameName) {
         document.getElementById("gameThumbnail").parentElement.classList.remove("loading");
     });
 
-    document.getElementById("gameThumbnail").src = `https://www.roblox.com/asset-thumbnail/image?assetId=${placeID}&width=768&height=432&format=png`;
+    var http = new XMLHttpRequest();
+    http.open("GET", `https://thumbnails.roproxy.com/v1/assets?assetIds=${placeID}&returnPolicy=PlaceHolder&size=768x432&format=Png&isCircular=false`);
+    http.send();
+    
+    http.onreadystatechange = (e) => {
+        var body = http.responseText;
+        try {
+            var json = JSON.parse(body);
+            document.getElementById("gameThumbnail").src = json.data[0].imageUrl;
+        } catch {
+            document.getElementById("gameThumbnail").remove();
+        }
+    }
     document.getElementById("gameName").innerHTML = gameName;
     document.getElementById("gamePage").href = `https://roblox.com/games/${placeID}`;
 
