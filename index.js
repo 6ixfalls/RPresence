@@ -38,7 +38,6 @@ if (!placeID || !gameInstanceId || !gameName) {
 
     var http = new XMLHttpRequest();
     http.open("GET", `https://thumbnails.roproxy.com/v1/assets?assetIds=${placeID}&returnPolicy=PlaceHolder&size=768x432&format=Png&isCircular=false`);
-    http.send();
     
     http.onreadystatechange = (e) => {
         var body = http.responseText;
@@ -49,6 +48,9 @@ if (!placeID || !gameInstanceId || !gameName) {
             document.getElementById("gameThumbnail").remove();
         }
     }
+    
+    http.send();
+    
     document.getElementById("gameName").innerHTML = gameName;
     document.getElementById("gamePage").href = `https://roblox.com/games/${placeID}`;
 
