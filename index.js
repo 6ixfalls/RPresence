@@ -40,12 +40,15 @@ if (!placeID || !gameInstanceId || !gameName) {
     http.open("GET", `https://thumbnails.roproxy.com/v1/assets?assetIds=${placeID}&returnPolicy=PlaceHolder&size=768x432&format=Png&isCircular=false`);
     
     http.onreadystatechange = (e) => {
-        var body = http.responseText;
-        try {
-            var json = JSON.parse(body);
-            document.getElementById("gameThumbnail").src = json.data[0].imageUrl;
-        } catch {
-            document.getElementById("gameThumbnail").remove();
+        if (http.readyState == XMLHttpRequest.DONE) {
+            var body = http.responseText;
+            try {
+                var json = JSON.parse(body);
+                document.getElementById("gameThumbnail").src = json.data[0].imageUrl;
+            } catch (e) {
+                console.log(e);
+                document.getElementById("gameThumbnail").remove();
+            }
         }
     }
     
