@@ -27,7 +27,7 @@
     "discord-rpc": "^3.1.0",
     "electron-log": "^4.4.1",
     "express": "^4.17.1",
-    "find-process": "^1.4.4",
+    "find-process": "^1.4.7",
     "object-fill-missing-keys": "^8.1.0",
     "source-map-support": "^0.5.21",
     "wql-process-monitor": "github:xan105/node-processMonitor#ed58a15212366626e5e49daa3bf51fccc900f324"

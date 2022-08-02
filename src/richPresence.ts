@@ -168,29 +168,30 @@ export async function BeginListener() {
 
                                     let joinURL;
 
-                                    if (
-                                        global.configJSON.joinLinkMode ==
-                                        "rogold"
-                                    ) {
-                                        joinURL = `https://sixfalls.me/RPresence/?placeID=${
-                                            gameInfoData.rootPlaceId
-                                        }&gameInstanceID=${
-                                            gameInfoData.gameId
-                                        }&gameName=${encodeURIComponent(
-                                            gameInfoData.lastLocation
-                                        )}`;
-                                    } else {
-                                        var inviteData = await axios.get(
-                                            `https://ropro.io/api/createInvite.php?universeid=${gameInfoData.universeId}&serverid=${gameInfoData.gameId}`,
-                                            {
-                                                responseType: "text",
-                                                headers: {
-                                                    From: "https://github.com/6ixfalls/RPresence", // tell ropro api that api is from us (optional but why not)
-                                                },
-                                            }
-                                        );
+                                    switch (global.configJSON.joinLinkMode) {
+                                        case "rogold":
+                                            joinURL = `https://sixfalls.me/RPresence/?placeID=${gameInfoData.rootPlaceId
+                                                }&gameInstanceID=${gameInfoData.gameId
+                                                }&gameName=${encodeURIComponent(
+                                                    gameInfoData.lastLocation
+                                                )}`;
+                                            break;
+                                        case "ropro":
+                                            var inviteData = await axios.get(
+                                                `https://ropro.io/api/createInvite.php?universeid=${gameInfoData.universeId}&serverid=${gameInfoData.gameId}`,
+                                                {
+                                                    responseType: "text",
+                                                    headers: {
+                                                        From: "https://github.com/6ixfalls/RPresence", // tell ropro api that api is from us (optional but why not)
+                                                    },
+                                                }
+                                            );
 
-                                        joinURL = inviteData.data;
+                                            joinURL = inviteData.data;
+                                            break;
+                                        case "roblox":
+                                            const baseURL = `https://www.roblox.com/games/start?placeId=${gameInfoData.rootPlaceId}`;
+                                            joinURL = `https://ro.blox.com/Ebh5?af_dp=${encodeURIComponent(baseURL)}&af_web_dp=${encodeURIComponent(baseURL)}`;
                                     }
 
                                     global.rpc.setActivity({

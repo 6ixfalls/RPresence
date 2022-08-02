@@ -30,7 +30,7 @@ let defaultConfigJSON = {
     enabled: true,
     studioEnabled: true,
     bypassPrivacy: false,
-    joinLinkMode: "rogold", // rogold, ropro
+    joinLinkMode: "rogold", // rogold, ropro, roblox
 };
 
 let configJSON: any = defaultConfigJSON;
@@ -57,15 +57,21 @@ async function exit() {
     try {
         await rpc.clearActivity();
         tray.destroy();
-    } catch (e) {}
+    } catch (e) { }
     process.kill(process.pid);
 }
 
 function handleRadioClick(menuItem: MenuItem) {
-    if (menuItem.label == "RoGold") {
-        configJSON.joinLinkMode = "rogold";
-    } else {
-        configJSON.joinLinkMode = "ropro";
+    switch (menuItem.label) {
+        case "RoGold":
+            configJSON.joinLinkMode = "rogold";
+            break;
+        case "RoPro":
+            configJSON.joinLinkMode = "ropro";
+            break;
+        case "Roblox":
+            configJSON.joinLinkMode = "roblox";
+            break;
     }
 
     log.info("Switching to " + configJSON.joinLinkMode + " method");
@@ -109,6 +115,12 @@ rpc.on("ready", async () => {
             label: "Invite Link Mode",
             submenu: [
                 {
+                    label: "Roblox",
+                    type: "radio",
+                    checked: configJSON.joinLinkMode == "roblox",
+                    click: handleRadioClick,
+                },
+                {
                     label: "RoGold",
                     type: "radio",
                     checked: configJSON.joinLinkMode == "rogold",
@@ -136,7 +148,7 @@ async function go() {
 
         try {
             app.dock.hide();
-        } catch (e) {}
+        } catch (e) { }
         let logo = "ico/logo_white.png";
         if (os.platform() == "win32") {
             logo = "ico/logo.ico";
