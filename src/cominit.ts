@@ -38,6 +38,11 @@ processMonitor.on(
                     log.error("Multiple Roblox processes running!");
                 }
 
+                if (list[0].cmd.endsWith("RobloxPlayerBeta.exe")) {
+                    log.info("Roblox process has no arguments! Aborting presence set.");
+                    return;
+                }
+
                 dataTable.processInfo = list[0];
                 var cmd = dataTable.processInfo.cmd.split(" ");
                 dataTable.processInfo.command = cmd.shift();
