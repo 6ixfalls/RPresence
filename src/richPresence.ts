@@ -52,6 +52,13 @@ async function getGameFromCache(gameid: number) {
 }
 
 export async function BeginListener() {
+    CachedIcons[0] = {
+        name: "Unknown Game",
+        by: "Unknown",
+        iconkey: global.configJSON.defaultIconKey,
+        id: 0,
+    }
+
     const process = childprocess.fork(path.join(__dirname, "cominit.js"));
 
     process.on("message", async (msg) => {
@@ -69,23 +76,23 @@ export async function BeginListener() {
 
                 if (cmd.includes("RobloxPlayerBeta")) {
                     let scriptUrl = util.getScriptUrl(proc.arguments);
-                    let placeId: number | false;
+                    let placeId: number;
 
                     if (scriptUrl == false) {
                         log.info("[Detect:Proc] Couldn't find the script URL");
-                        placeId = false;
+                        placeId = 0;
                         scriptUrl = "";
                     } else {
                         log.info("[Detect:Proc] Script URL", scriptUrl);
                     }
                     if (!scriptUrl.includes("placeId=")) {
                         log.info("[Detect:Proc] Malformed script URL");
-                        placeId = false;
+                        placeId = 0;
                     }
                     placeId = parseInt(scriptUrl.split("placeId=")[1]);
                     if (isNaN(placeId)) {
                         log.info("[Detect:Proc] Malformed script URL");
-                        placeId = false;
+                        placeId = 0;
                     }
                     log.info("[Detect:Proc] Found game ID:", placeId);
 
@@ -96,11 +103,10 @@ export async function BeginListener() {
                         return;
                     }
 
-                    if (placeId == false) {
+                    if (placeId === 0) {
                         global.rpc.clearActivity();
                         global.tray.setTitle("");
                         log.info("[Detect:Proc] Couldn't find script URL");
-                        return;
                     }
 
                     let game = await getGameFromCache(placeId);
