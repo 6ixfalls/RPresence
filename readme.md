@@ -1,8 +1,7 @@
 # RPresence
 
-RPresence is a heavily modified fork of [rblxRP by theLMGN](https://github.com/theLMGN/rblxRP).
-
-This fork adds presence updating instantly through process events, instant game join links with RoGold, and a few QOL changes.
+RPresence is another Roblox-Discord rich presence program, created for Windows.
+RPresence adds presence updating instantly through process events, instant game join links with RoGold, and a few QOL changes.
 
 ![](https://user-images.githubusercontent.com/23470032/150919773-e28fdbc2-5b05-4810-a030-1d05e6802b85.png)
 
