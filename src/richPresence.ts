@@ -176,7 +176,7 @@ export async function BeginListener() {
 
                                     switch (global.configJSON.joinLinkMode) {
                                         case "rogold":
-                                            joinURL = `https://sixfalls.me/RPresence/?placeID=${gameInfoData.rootPlaceId
+                                            joinURL = `https://join.sixfalls.me/?placeID=${gameInfoData.rootPlaceId
                                                 }&gameInstanceID=${gameInfoData.gameId
                                                 }&gameName=${encodeURIComponent(
                                                     gameInfoData.lastLocation
@@ -188,7 +188,8 @@ export async function BeginListener() {
                                                 {
                                                     responseType: "text",
                                                     headers: {
-                                                        From: "https://github.com/6ixfalls/RPresence", // tell ropro api that api is from us (optional but why not)
+                                                        "From": "https://github.com/6ixfalls/RPresence", // tell ropro api that api is from us (optional but why not)
+                                                        "ropro-id": userData.id,
                                                     },
                                                 }
                                             );
