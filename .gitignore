@@ -1,5 +1,21 @@
-node_modules
-build/
-dist/
+# Developer tools' files
+.lite_workspace.lua
+
+# Neutralinojs binaries and builds
+/bin
+/dist
+
+# TS builds
+/build
+
+# Neutralinojs client (minified)
+neutralino.js
+
+# Neutralinojs related files
+.storage
+*.log
+/.tmp
+
+/node_modules
 .DS_Store
 .dccache

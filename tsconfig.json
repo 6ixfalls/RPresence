@@ -1,14 +1,24 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "outDir": "build",
+        "module": "ES2022",
+        "lib": ["ES2022", "dom"],
+        "target": "ES2022",
+        "outDir": "resources/js",
         "noImplicitAny": false,
         "removeComments": true,
         "preserveConstEnums": true,
-	    "skipLibCheck": true,
-        "esModuleInterop": true
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "importsNotUsedAsValues": "remove",
+        "types": ["neutralinojs-types"]
     },
     "include": ["src"],
-    "exclude": ["node_modules", "**/*.spec.ts"]
+    "exclude": ["node_modules", "**/*.spec.ts"],
+    "watchOptions": {
+        "watchFile": "useFsEvents",
+        "watchDirectory": "useFsEvents",
+        "fallbackPolling": "dynamicPriority",
+        "synchronousWatchDirectory": true,
+        "excludeDirectories": ["**/node_modules", "build", "bin"]
+    }
 }
